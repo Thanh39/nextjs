@@ -19,12 +19,36 @@ const DUMY_MEETUPS = [
     description: "this A second MEetup",
   },
 ];
-function HomePage() {
-  const [loadMeetup, setLoadMeetup] = useState([]);
-  useEffect(
-    //render one times
-    setLoadMeetup(DUMY_MEETUPS)
-  , []);
-  return <MeetupList meetups={loadMeetup} />;
+function HomePage(props) {
+  // const [loadMeetup, setLoadMeetup] = useState([]);
+  // useEffect(
+  //   //render one times , send a http request and fetch data
+  //   setLoadMeetup(DUMY_MEETUPS)
+  // , []);
+  return <MeetupList meetups={props.meetups} />;
 }
+
+export async function getServerSideProps(context){
+    const req =context.req;
+    const res =context.res;
+
+     //fetch data from an API
+  return{
+    props:{
+      meetups:DUMY_MEETUPS
+    },
+  
+  }
+}
+// export async function getStaticProps(){
+//   //fetch data from an API
+//   return{
+//     props:{
+//       meetups:DUMY_MEETUPS
+//     },
+//     //generated revalidate : tao ra xac nhan lai trong 10s
+//     revalidate:1
+//   }
+// }
+
 export default HomePage;
